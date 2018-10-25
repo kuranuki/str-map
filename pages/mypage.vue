@@ -1,6 +1,8 @@
 <template lang="pug">
-  div
+  div(v-if="user")
     .headline.text-xs-center.pa-5
+      div
+        |  {{ user.name }}
       v-btn(@click="clickLogout") ログアウト
 </template>
 
@@ -12,8 +14,10 @@ const user = namespace('user')
 
 @Component({})
 export default class extends Vue {
-  @Action('user/logout')
+  @user.Action('logout')
   logout
+  @user.State('user')
+  user
 
   clickLogout() {
     this.logout().then(() => this.$router.push('/'))
