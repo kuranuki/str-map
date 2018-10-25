@@ -82,7 +82,11 @@ export default class extends Vue {
 
   clickCreateMap() {
     if (this.mapName !== '') {
-      this.createMap({ mapName: this.mapName, userId: this.user.id })
+      this.createMap({
+        mapName: this.mapName,
+        userId: this.user.id,
+        users: [this.user]
+      })
       this.mapName = ''
     }
   }

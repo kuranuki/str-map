@@ -16,8 +16,8 @@ export const actions = {
       .then(() => console.log('success binded mapsRef'))
       .catch(err => console.log(err))
   }),
-  createMap: firebaseAction(({ state }, { mapName, userId }) => {
-    mapsRef.add({ name: mapName, user_ids: [userId] })
+  createMap: firebaseAction(({ state }, { mapName, userId, users }) => {
+    mapsRef.add({ name: mapName, user_ids: [userId], users: users })
   })
 }
 
