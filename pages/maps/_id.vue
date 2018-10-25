@@ -12,6 +12,8 @@
         td(:style="{ width: '16%',  backgroundColor: colorIndex[props.item.strength3] }") {{ props.item.strength3 }}
         td(:style="{ width: '16%',  backgroundColor: colorIndex[props.item.strength4] }") {{ props.item.strength4 }}
         td(:style="{ width: '16%',  backgroundColor: colorIndex[props.item.strength5] }") {{ props.item.strength5 }}
+    div
+      nuxt-link(to="/mypage") 戻る
 </template>
 
 <script lang="ts">

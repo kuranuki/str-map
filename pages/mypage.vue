@@ -12,14 +12,17 @@
         .strength(:style="{ backgroundColor: colorIndex[user.strength4] }") ４位： {{ user.strength4 }}
         .strength(:style="{ backgroundColor: colorIndex[user.strength5] }") ５位： {{ user.strength5 }}
       div(v-else-if="bottomNav === 'strmap'")
-        | 一覧画面aaa
-        ul
-          li(v-for="(item, index) in maps" :key="index")
-            nuxt-link(:to="'/maps/' + item.id") {{ item.name }}
-        div
-          nuxt-link(to="/") トップpに
-        div
-          nuxt-link(to="/maps/abc") つよみマップ
+        | つよみマップ一覧
+        v-list(two-line='')
+          template(v-for='(item, index) in maps')
+            v-list-tile(:key='item.id' avatar='' ripple='' @click='goMap(item.id)')
+              v-list-tile-content
+                v-list-tile-title {{ item.name }}
+                v-list-tile-sub-title.text--primary
+                  span(v-for="(user, user_index) in item.users" :key="user_index")
+                    v-avatar(:tile="false", :size="24", color="grey lighten-4")
+                      img(:src="user.icon_url")
+            v-divider(v-if='index + 1 < maps.length' :key='index')
         .create
           v-form(ref="form" v-model="valid" lazy-validation)
             v-text-field(v-model="mapName" label="名前")
@@ -78,6 +81,10 @@ export default class extends Vue {
 
   clickLogout() {
     this.logout().then(() => this.$router.push('/'))
+  }
+
+  goMap(mapId) {
+    this.$router.push('/maps/' + mapId)
   }
 
   clickCreateMap() {
