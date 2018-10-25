@@ -50,6 +50,16 @@ const CATEGORY_COLORS = {
 }
 
 export const getters = {
+  colorIndex: state => {
+    let result = {}
+    Object.keys(CATEGORY).forEach(key => {
+      let values = CATEGORY[key]
+      values.forEach(value => {
+        result[value] = CATEGORY_COLORS[key]
+      })
+    })
+    return result
+  },
   strValues: state => {
     return Object.keys(CATEGORY).map(key => CATEGORY[key])
   },
