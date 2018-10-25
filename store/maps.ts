@@ -12,7 +12,10 @@ export const state = () => ({
 export const mutations = {}
 
 export const actions = {
-  init: firebaseAction(({ bindFirebaseRef }, { userId }) => {
+  init: firebaseAction(({ state, bindFirebaseRef }, { userId }) => {
+    if (state.maps.length > 0) {
+      return
+    }
     bindFirebaseRef('maps', mapsRef.where('user_ids', 'array-contains', userId))
       .then(() => console.log('success binded mapsRef'))
       .catch(err => console.log(err))
