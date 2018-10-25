@@ -5,7 +5,8 @@ import firebaseApp from '~/plugins/firebase-app'
 const mapsRef = firebaseApp.firestore().collection('maps')
 
 export const state = () => ({
-  maps: []
+  maps: [],
+  mapDetail: []
 })
 
 export const mutations = {}
@@ -18,6 +19,11 @@ export const actions = {
   }),
   createMap: firebaseAction(({ state }, { mapName, userId, users }) => {
     mapsRef.add({ name: mapName, user_ids: [userId], users: users })
+  }),
+  initMapDetail: firebaseAction(({ bindFirebaseRef }, { mapId }) => {
+    bindFirebaseRef('mapDetail', mapsRef.doc(mapId))
+      .then(() => console.log('success binded mapsRef'))
+      .catch(err => console.log(err))
   })
 }
 
