@@ -1,5 +1,5 @@
 <template lang="pug">
-  div(v-if="user")
+  div
     str-entry-dialog(:dialog="!this.isEntered")
     .headline.text-xs-center.pa-5
       div(v-if="bottomNav === 'mypage'")
@@ -12,11 +12,18 @@
         .strength(:style="{ backgroundColor: colorIndex[user.strength4] }") ４位： {{ user.strength4 }}
         .strength(:style="{ backgroundColor: colorIndex[user.strength5] }") ５位： {{ user.strength5 }}
       div(v-else-if="bottomNav === 'strmap'")
-        | 一覧画面
+        | 一覧画面aaa
+        ul
+          li(v-for="(item, index) in maps" :key="index")
+            nuxt-link(:to="'/maps/' + item.id") {{ item.name }}
         div
           nuxt-link(to="/") トップpに
         div
           nuxt-link(to="/maps/abc") つよみマップ
+        .create
+          v-form(ref="form" v-model="valid" lazy-validation)
+            v-text-field(v-model="mapName" label="名前")
+            v-btn(color="blue darken-1" flat="" @click="clickCreateMap") 作成
       div(v-else)
         v-btn(@click="clickLogout") ログアウト
 
@@ -38,6 +45,7 @@ import { State, Action, Getter, namespace } from 'vuex-class'
 import StrEntryDialog from '~/components/StrEntryDialog.vue'
 
 const user = namespace('user')
+const maps = namespace('maps')
 
 @Component({
   components: {
@@ -53,11 +61,30 @@ export default class extends Vue {
   isEntered
   @Getter('strength/colorIndex')
   colorIndex
+  @Action('maps/createMap')
+  createMap
+  @Action('maps/init')
+  init
+  @maps.State('maps')
+  maps
 
   bottomNav = 'mypage'
+  mapName = ''
+  valid = true
+
+  created() {
+    this.init({ userId: this.user.id })
+  }
 
   clickLogout() {
     this.logout().then(() => this.$router.push('/'))
+  }
+
+  clickCreateMap() {
+    if (this.mapName !== '') {
+      this.createMap({ mapName: this.mapName, userId: this.user.id })
+      this.mapName = ''
+    }
   }
 }
 </script>
@@ -65,5 +92,11 @@ export default class extends Vue {
 <style lang="scss" scoped>
 .strength {
   padding: 10px;
+}
+.create {
+  background-color: #e0e0e0;
+  width: 100%;
+  padding: 10px;
+  margin-top: 30px;
 }
 </style>

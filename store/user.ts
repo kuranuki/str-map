@@ -53,11 +53,19 @@ export const actions = {
               })
           })
 
-          bindFirebaseRef('user', usersRef.doc(authenticatedUser.uid), {
-            wait: true
+          await new Promise((resolve, reject) => {
+            bindFirebaseRef('user', usersRef.doc(authenticatedUser.uid), {
+              wait: true
+            })
+              .then(() => {
+                console.log('success binded')
+                resolve()
+              })
+              .catch(err => {
+                console.log(err)
+                reject()
+              })
           })
-            .then(() => console.log('success binded'))
-            .catch(err => console.log(err))
 
           resolve()
         } else {
