@@ -5,6 +5,9 @@ const nodeExternals = require('webpack-node-externals')
 module.exports = {
   mode: 'spa',
 
+  router: {
+    middleware: 'authenticated'
+  },
   /*
   ** Headers of the page
   */
@@ -38,7 +41,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['@/plugins/vuetify', '@/plugins/firestore'],
+  plugins: ['@/plugins/vuetify', '@/plugins/firebase-app'],
 
   /*
   ** Nuxt.js modules

@@ -11,12 +11,13 @@ import { Action } from 'vuex-class'
 
 @Component({})
 export default class extends Vue {
-  // @Action('user/onAuthStateChanged')
-  // onAuthStateChanged
-  // created() {
-  //   this.onAuthStateChanged().then(() => {
-  //     this.$router.push('/inspire')
-  //   })
-  // }
+  @Action('user/onAuthStateChanged')
+  onAuthStateChanged
+
+  created() {
+    this.onAuthStateChanged().then(() => {
+      this.$router.push('/mypage')
+    })
+  }
 }
 </script>

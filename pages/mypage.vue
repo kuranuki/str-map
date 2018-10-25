@@ -1,7 +1,6 @@
 <template lang="pug">
   div
     .headline.text-xs-center.pa-5
-      | Active: {{ bottomNav }}
       v-btn(@click="clickLogout") ログアウト
 </template>
 
@@ -9,8 +8,15 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { State, Action, Getter, namespace } from 'vuex-class'
 
-const strength = namespace('user')
+const user = namespace('user')
 
 @Component({})
-export default class extends Vue {}
+export default class extends Vue {
+  @Action('user/logout')
+  logout
+
+  clickLogout() {
+    this.logout().then(() => this.$router.push('/'))
+  }
+}
 </script>

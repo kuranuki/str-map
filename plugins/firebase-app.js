@@ -13,4 +13,4 @@ if (!firebase.apps.length) {
 }
 const firestore = firebase.firestore()
 firestore.settings({ timestampsInSnapshots: true })
-export default firestore
+export default firebase.app()
