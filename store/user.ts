@@ -65,11 +65,26 @@ export const actions = {
         }
       })
     })
+  }),
+  setStrength: firebaseAction(({ state }, { str1, str2, str3, str4, str5 }) => {
+    usersRef.doc(state.user.id).update({
+      strength1: str1,
+      strength2: str2,
+      strength3: str3,
+      strength4: str4,
+      strength5: str5
+    })
   })
 }
 
 export const getters = {
   isLogined(state): boolean {
     return !!state.user
+  },
+  isEntered(state): boolean {
+    if (!state.user) {
+      return false
+    }
+    return !!state.user.strength1
   }
 }
