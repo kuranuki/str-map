@@ -1,11 +1,35 @@
 <template lang="pug">
   div(v-if="user")
+    str-entry-dialog(:dialog="!this.isEntered")
     .headline.text-xs-center.pa-5
-      div
-        |  {{ user.name }}
-      v-btn(@click="clickLogout") ログアウト
-      div
-        str-entry-dialog(:dialog="!this.isEntered")
+      div(v-if="bottomNav === 'mypage'")
+        v-avatar(:tile="false", :size="100", color="grey lighten-4")
+          img(:src="user.icon_url")
+        div {{ user.name }}
+        .strength １位： {{ user.strength1 }}
+        .strength ２位： {{ user.strength2 }}
+        .strength ３位： {{ user.strength3 }}
+        .strength ４位： {{ user.strength4 }}
+        .strength ５位： {{ user.strength5 }}
+      div(v-else-if="bottomNav === 'strmap'")
+        | 一覧画面
+        div
+          nuxt-link(to="/") トップpに
+        div
+          nuxt-link(to="/maps/abc") つよみマップ
+      div(v-else)
+        v-btn(@click="clickLogout") ログアウト
+
+    v-bottom-nav(:active.sync="bottomNav" :value="true" color="white" fixed="")
+      v-btn(color="teal" flat value="mypage")
+        span マイページ
+        v-icon face
+      v-btn(color="teal" flat value="strmap")
+        span つよみマップ
+        v-icon assessment
+      v-btn(color="teal" flat value="settings")
+        span 設定
+        v-icon settings
 </template>
 
 <script lang="ts">
@@ -28,8 +52,16 @@ export default class extends Vue {
   @user.Getter('isEntered')
   isEntered
 
+  bottomNav = 'mypage'
+
   clickLogout() {
     this.logout().then(() => this.$router.push('/'))
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.strength {
+  padding: 10px;
+}
+</style>
