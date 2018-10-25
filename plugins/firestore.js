@@ -3,12 +3,12 @@ import 'firebase/firestore'
 
 if (!firebase.apps.length) {
   firebase.initializeApp({
-    apiKey: '',
-    authDomain: '',
-    databaseURL: '',
-    projectId: '',
-    storageBucket: '',
-    messagingSenderId: ''
+    apiKey: 'AIzaSyAmlrZlWrXHR3vtHWDYQPIBS6rzFFhkSuM',
+    authDomain: 'tsuyomi-map.firebaseapp.com',
+    databaseURL: 'https://tsuyomi-map.firebaseio.com',
+    projectId: 'tsuyomi-map',
+    storageBucket: 'tsuyomi-map.appspot.com',
+    messagingSenderId: '732980104001'
   })
 }
 const firestore = firebase.firestore()
