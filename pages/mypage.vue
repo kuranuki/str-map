@@ -11,28 +11,21 @@
       .strength(:style="{ backgroundColor: colorIndex[user.strength4] }") ４位： {{ user.strength4 }}
       .strength(:style="{ backgroundColor: colorIndex[user.strength5] }") ５位： {{ user.strength5 }}
 
-    v-bottom-nav(:active.sync="bottomNav" :value="true" color="white" fixed="")
-      v-btn(color="teal" flat value="mypage")
-        span マイページ
-        v-icon face
-      v-btn(color="teal" flat value="strmap" @click="$router.push('/maps')")
-        span つよみマップ
-        v-icon assessment
-      v-btn(color="teal" flat value="settings" @click="$router.push('/settings')")
-        span 設定
-        v-icon settings
+    main-bottom-nav(bottomNav="mypage")
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { State, Action, Getter, namespace } from 'vuex-class'
 import StrEntryDialog from '~/components/StrEntryDialog.vue'
+import MainBottomNav from '~/components/MainBottomNav.vue'
 
 const user = namespace('user')
 
 @Component({
   components: {
-    StrEntryDialog
+    StrEntryDialog,
+    MainBottomNav
   }
 })
 export default class extends Vue {
@@ -42,8 +35,6 @@ export default class extends Vue {
   isEntered
   @Getter('strength/colorIndex')
   colorIndex
-
-  bottomNav = 'mypage'
 }
 </script>
 

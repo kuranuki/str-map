@@ -1,7 +1,7 @@
 <template lang="pug">
   div
     str-entry-dialog(:dialog="!this.isEntered")
-    .headline.text-xs-center.pa-5
+    .headline.text-xs-center.pa-1
       | つよみマップ一覧
       v-list(two-line='')
         template(v-for='(item, index) in maps')
@@ -18,29 +18,22 @@
           v-text-field(v-model="mapName" label="名前")
           v-btn(color="blue darken-1" flat="" @click="clickCreateMap") 作成
 
-    v-bottom-nav(:active.sync="bottomNav" :value="true" color="white" fixed="")
-      v-btn(color="teal" flat value="mypage" @click="$router.push('/mypage')")
-        span マイページ
-        v-icon face
-      v-btn(color="teal" flat value="strmap")
-        span つよみマップ
-        v-icon assessment
-      v-btn(color="teal" flat value="settings" @click="$router.push('/settings')")
-        span 設定
-        v-icon settings
+    main-bottom-nav(bottomNav="maps")
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { State, Action, Getter, namespace } from 'vuex-class'
 import StrEntryDialog from '~/components/StrEntryDialog.vue'
+import MainBottomNav from '~/components/MainBottomNav.vue'
 
 const user = namespace('user')
 const maps = namespace('maps')
 
 @Component({
   components: {
-    StrEntryDialog
+    StrEntryDialog,
+    MainBottomNav
   }
 })
 export default class extends Vue {
@@ -55,7 +48,6 @@ export default class extends Vue {
   @maps.State('maps')
   maps
 
-  bottomNav = 'strmap'
   mapName = ''
   valid = true
 
